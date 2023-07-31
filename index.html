@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <script src="rawData.js"></script>
+    <script src="script.js"></script>
+    <link type="text/css" rel="stylesheet" href="style.css">
+</head>
+
+<body onload="main()">
+        <div class="headline">
+            <h1>STÄDTL</h1>
+            Errate deutsche Städte
+        </div>
+        <div class="wappen frame">
+            <h4>Stadt-Wappen</h4>
+            <img id="wappen" src="placeholder.png"/>
+        </div>
+        <div class="photo frame">
+            <h4>Stadt Ansicht</h4>
+            <img id="photo" src="placeholder.png"/>
+        </div>
+        <div class="location frame">
+            <h4>Stadt Standort</h4>
+            <img id="location" src="placeholder.png"/>
+        </div>
+        <div class="cityInfo">
+            <div class="cityname info">
+                <h4>Stadtname:</h4>
+                <h2 id="cityname">????</h2>
+            </div>
+            <div class="state info">
+                <h4>Verwaltungseinheit:</h4>
+                <p id="state">????</p>
+            </div>
+            <div class="plz info">
+                <h4>Postleitzahl(en):</h4>
+                <p id="plz">?????</p>
+            </div>
+            <div class="pop info">
+                <h4>Einwohnerzahl:</h4>
+                <p id="pop">?????</p>
+            </div>
+            <div class="alt info">
+                <h4>Höhe über Meeresspiegel:</h4>
+                <p id="alt">?????</p>
+            </div>
+        </div>
+    </div>
+    <div id="tries"></div>
+    <div id="inputArea">
+    <label for="fname">Vorschlag:</label>
+    <input onkeyup="proposal()" type="text" id="input" name="fname">
+    <button id="ok" onclick="nextTry()">OK</button>
+    <div id="proposal"></div>
+    </div>
+</body>
+
+</html>

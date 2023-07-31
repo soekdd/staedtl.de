@@ -1,0 +1,106 @@
+body, html{
+    margin:0;
+    padding:0;
+    position: fixed;
+    width: 100%;
+}
+* {
+    font-family: "Gill Sans", sans-serif;
+}
+h1, h2, h3, h4{
+    padding: 0.25vw 0;
+    margin:0;
+}
+h1{
+    font-size: 4vw;
+}
+h4{
+    font-size: 2vw;
+}
+h2{
+    font-size: 3vw;
+}
+.info p,#tries p{
+    font-size: 2vw;
+    padding: 0.25vw 0 0.75vw 0;
+    margin:0;
+}
+.headline { 
+    position: absolute;
+    top:0;
+    left:0;
+    width:50vw;
+    height:3em;
+    padding:2vw;
+}
+.wappen { 
+    position: absolute;
+    top:6em;
+    left:0;
+    width:25vw;
+    padding:2vw;
+}
+.wappen img {
+    max-width: calc(100% - 4vw);
+    max-height: 15em;
+}
+.cityInfo{
+    position: absolute;
+    top:0em;
+    left:25vw;
+    width:25vw;
+    padding:2vw;
+}
+.photo img, .location img {
+    max-width: calc(100% - 4vw);
+    max-height: 17em;
+}
+.photo {
+    padding:2vw;
+    position: absolute;
+    top:0;
+    left:50vw;
+    width:50vw;
+    height:5em;
+}
+.location {    
+    padding:2vw;
+    position: absolute;
+    top:20em;
+    left:50vw;
+    width:50vw;
+    height:5em;
+}
+#tries {
+    padding:2vw;
+    position: absolute;
+    top:15em;
+    left:0;
+    font-size: 2.5vw;
+    width:100vw;
+    height:5em;   
+}
+#inputArea {
+    padding:2vw;
+    zoom:2;
+    position: absolute;
+    top:19em;
+    left:0;
+    width:100vw;
+    height:5em;   
+}
+#inputArea input{
+    width: calc(50vw - 11em);
+}
+
+.arrow{
+    height:1em;
+    width:1em;
+    margin:0 1em;
+}
+.lost{
+    color:red;
+}
+.won{
+    color:green;
+}
