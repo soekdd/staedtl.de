@@ -11,7 +11,7 @@ var main = () => {
     let seed = (today.getFullYear() * 100 + today.getMonth()) * 100 + today.getDay();
     currentCity = data[random(seed, data.length)];
     setInfoLevel( 1*level );
-    console.log(currentCity);    
+    // console.log(currentCity);    
 }
 
 var random = (seed, max) => {
@@ -70,7 +70,7 @@ var currentCity;
 var getCoordinates = (city)=>{
     let geo = city.location.slice(6).slice(0,-1).split(' '); 
     for (let i in geo) { geo[i] = parseFloat(geo[i]) }
-    console.log(geo);
+    // console.log(geo);
     return geo;
 }
 
