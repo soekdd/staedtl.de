@@ -131,7 +131,7 @@ var updateTries = () => {
             * Math.cos(long2 * Math.PI / 180 - long1 * Math.PI / 180 )
         );
         s += '<p>' +count+'. ' + city.cityLabel
-            + '<img src="https://upload.wikimedia.org/wikipedia/commons/f/fe/Green-Up-Arrow.svg" style="transform: rotate('+Math.round(deg)+'deg);" class="arrow"/>'
+            + '<img src="arrow.svg" style="transform: rotate('+Math.round(deg)+'deg);" class="arrow"/>'
             +  Math.round(distance) + ' km</p>';
     }
     document.getElementById('tries').innerHTML = s;
