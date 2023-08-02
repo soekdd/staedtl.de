@@ -1,27 +1,42 @@
-var data = [];
-var main = () => {
-    let cityNames = new Set();
-    for (let city of rawData) {
-        if (!cityNames.has(city.cityLabel)) {
-            data.push(city);
-            cityNames.add(city.cityLabel);
-        }
-    }
-    let today = new Date();
-    let seed = (today.getFullYear() * 100 + today.getMonth()) * 100 + today.getDay();
-    currentCity = data[random(seed, data.length)];
-    setInfoLevel( 1*level );
-    // console.log(currentCity);    
-}
-
-var random = (seed, max) => {
-    seed = seed - 100;
-    var x = Math.sin(seed++) * 10000;
-    return Math.floor(max * (x - Math.floor(x)));
-}
+var data, game;
 var level = 1;
 var tries = [];
 var maxLevel = 7;
+
+var spruch = ['', 'Glück gehabt!', 'Du bist ein Genie!', 'Das war sehr gut!', 'Ziemlich gut!', 'Immer noch ganz gut!', 'Du brauchtest viel Hilfe!', 'Knappe Sache!'];
+var main = () => {    
+    setISO('de');
+}
+
+var setISO = (iso) => {
+    console.log('setISO');
+    if (level == 1) {
+        game = iso;
+        if (game == 'de') {
+            data = datade;
+            document.getElementById('eu').style = "opacity:0.3";
+            document.getElementById('de').style = "";
+            } else {
+            data = dataeu;
+            document.getElementById('eu').style = "";
+            document.getElementById('de').style = "opacity:0.3";
+        }
+        let today = new Date();
+        let seed = (today.getFullYear() * 100 + today.getMonth()) * 100 + today.getDay();
+        currentCity = data[random(seed, data.length)];    
+        console.log(currentCity);
+        setInfoLevel( 1*level );    
+        } else {
+        document.getElementById('eu').style = "display:none";
+        document.getElementById('de').style = "display:none";
+    }
+}
+
+var random = (seed, max) => {
+    seed = seed - 51;
+    var x = Math.sin(seed++) * 10000;
+    return Math.floor(max * (x - Math.floor(x)));
+}
 
 var arrayToValues = (arr) => {
     let res = [];
@@ -29,40 +44,41 @@ var arrayToValues = (arr) => {
         res.push(parseInt(a))
     return res;
 }
-var setInfoLevel = (level) => {
-    let levels = ['alt', 'pop', 'wappen', 'plz', 'photo', 'state', 'location','cityname'].splice(0, level);
-    if(levels.includes('alt')) {
-        document.getElementById('alt').innerHTML = currentCity.height + ' m';
+var setInfoLevel = (level) => { 
+    if (level > 1) {
+        document.getElementById('eu').style = "display:none";
+        document.getElementById('de').style = "display:none";
+    }
+    try {
+        document.getElementById('label').innerHTML = level + '/' + maxLevel + ':';
+    } catch(e) {}
+    let levels = ['alt', 'pop', 'wappen', 'plz', 'photo', 'location',     'state','cityname'].splice(0, level);
+    if(levels.includes('alt')) { 
+        document.getElementById('alt').innerHTML = '<h4>Höhe über N. N.</h4><p>' + currentCity.a + ' m</p>';
     }
     if(levels.includes('pop')) {
-        document.getElementById('pop').innerHTML = currentCity.inhabitants;
+        document.getElementById('pop').innerHTML = '<h4>Einwohnerzahl:</h4><p>' + currentCity.i + '</p>';
     }
     if (levels.includes('plz')) {
-        let plzs = [...currentCity.plzMin.split('-'), ...currentCity.plzMax.split('-')];
-        plz = plzs[0];
-        if (plzs.length > 0) {
-            let p1 = Math.min(...arrayToValues(plzs));
-            let p2 = Math.max(...arrayToValues(plzs));
-            if (p1 == p1)
-                plz = p1;
-            else plz = p1 + '-' + p2;
-        }  
-        document.getElementById('plz').innerHTML = plz;
+        if (Array.isArray(currentCity.z))
+            document.getElementById('plz').innerHTML = '<h4>Postleitzahlen:</h4><p>' + currentCity.z.join('-') + '</p>';
+        else 
+            document.getElementById('plz').innerHTML = '<h4>Postleitzahl:</h4><p>' + currentCity.z + '</p>';
     }   
     if (levels.includes('wappen')) {
-        document.getElementById('wappen').src = currentCity.flag+'?width=300px';
+        document.getElementById('wappen').src = currentCity.f+'?width=300px';
     }
     if (levels.includes('state')) {
-        document.getElementById('state').innerHTML = currentCity.stateLabel;
+        document.getElementById('state').innerHTML = '<h4>Verwaltungseinheit:</h4><p>' + currentCity.s + '</p>';
     }    
     if (levels.includes('cityname')) {
-        document.getElementById('cityname').innerHTML = currentCity.cityLabel;
+        document.getElementById('cityname').innerHTML = currentCity.n;
     }    
     if (levels.includes('photo')) {
-        document.getElementById('photo').src = currentCity.image+'?width=400px';
+        document.getElementById('header').style = 'background-image: url('+ currentCity.p+'?width=1200px)';
     }
     if (levels.includes('location')) {
-        document.getElementById('location').src = currentCity.locationMap+'?width=400px';
+        document.getElementById('location').src = currentCity.l+'?width=400px';
     }
 }
 var currentCity;
@@ -76,15 +92,15 @@ var getCoordinates = (city)=>{
 
 var getIndex = (label)=>{
     for (let index in data)
-        if (data[index].cityLabel.toUpperCase() == label.toUpperCase())
+        if (data[index].n.toUpperCase() == label.toUpperCase())
             return index
     return -1;
 }
 
 var nextTry = () => {
     let input = document.getElementById('input').value.toUpperCase();
-    if (currentCity.cityLabel.toUpperCase() == input) {
-        document.getElementById('inputArea').innerHTML = '<h1 class="won">GEWONNEN!</h1>';
+    if (currentCity.n.toUpperCase() == input) {
+        document.getElementById('inputArea').innerHTML = '<h2 class="won">GEWONNEN!</h2><p>' + spruch[level] +'</p>';
         setInfoLevel(99);
         return
     }
@@ -96,7 +112,7 @@ var nextTry = () => {
     }
     updateTries();
     if (level > maxLevel) {
-        document.getElementById('inputArea').innerHTML = '<h1 class="lost">VERLOREN!</h1>';
+        document.getElementById('inputArea').innerHTML = '<h2 class="lost">VERLOREN!</h2>';
     }
     document.getElementById('proposal').innerHTML = '';
     document.getElementById('input').value = '';
@@ -106,18 +122,18 @@ var checkOK = () => {
     let input = document.getElementById('input').value.toUpperCase();
     let found = false;
     for (let city of data)
-        found = found || city.cityLabel.toUpperCase() == input
+        found = found || city.n.toUpperCase() == input
 
     document.getElementById('ok').disabled = !found;
 }
 
 var updateTries = () => {
-    let s = 'Fehlversuche:<br>';
-    let cGeo = getCoordinates(currentCity);
+    let s = '<h4>Fehlversuche:</h4>';
+    let cGeo = currentCity.g;
     let count = 0;
     for (let city of tries) {
         count++;
-        let tGeo = getCoordinates(city);
+        let tGeo = city.g;
         let long1 = cGeo[0];
         let long2 = tGeo[0];
         let lat1 = cGeo[1];
@@ -130,7 +146,7 @@ var updateTries = () => {
             Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180)
             * Math.cos(long2 * Math.PI / 180 - long1 * Math.PI / 180 )
         );
-        s += '<p>' +count+'. ' + city.cityLabel
+        s += '<p>' +count+'. ' + city.n
             + '<img src="arrow.svg" style="transform: rotate('+Math.round(deg)+'deg);" class="arrow"/>'
             +  Math.round(distance) + ' km</p>';
     }
@@ -149,11 +165,34 @@ var proposal = () => {
     let counter = 0;
     let s = '';
     for (let city of data)
-        if (city.cityLabel.toUpperCase().slice(0,input.length) == input) {
+        if (city.n.toUpperCase().slice(0,input.length) == input) {
             counter++;
-            if (counter < 5) {
-              s += '<a href="#" onclick="setProp(\''+city.cityLabel+'\')" >' + city.cityLabel + '</a></br>';
+            if (counter < 6) {
+              s += '<a href="#" onclick="setProp(\''+city.n+'\')" >' + city.n + '</a></br>';
             }
         }
     document.getElementById('proposal').innerHTML = s;
+}
+
+var impressum = (action) => {
+    if (action == 'show') {
+        document.getElementById('impressum').style="display:block"
+    }
+    else {
+        document.getElementById('impressum').style="display:none"
+    }
+
+}
+
+var info = (action) => {
+    if (action == 'show') {
+        document.getElementById('infoField').style = "display:block"
+        document.getElementById('numDe').innerHTML = datade.length + ' Städte';
+        document.getElementById('numEu').innerHTML = dataeu.length + ' Städte';
+    
+    }
+    else {
+        document.getElementById('infoField').style="display:none"
+    }
+
 }

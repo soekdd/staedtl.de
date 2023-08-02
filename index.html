@@ -1,64 +1,74 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <link rel="icon" type="image/x-icon" href="favicon.png">
-    <script src="rawData.js"></script>
-    <script src="script.js"></script>
-    <title>Städtl.de</title>
-    <link type="text/css" rel="stylesheet" href="style.css">
-</head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/x-icon" href="favicon.png">
+<script src="data.de.js"></script>
+<script src="data.eu.js"></script>
+<script src="script.js"></script>
+<title>Städtl.de</title>
+<link type="text/css" rel="stylesheet" href="style.css">
 
+<style>
+</style>
+</head>
 <body onload="main()">
-        <div class="headline">
-            <h1>STÄDTL</h1>
-            Errate deutsche Städte
-        </div>
-        <div class="wappen frame">
-            <h4>Stadt-Wappen</h4>
-            <img id="wappen" src="placeholder.png"/>
-        </div>
-        <div class="photo frame">
-            <h4>Stadt Ansicht</h4>
-            <img id="photo" src="placeholder.png"/>
-        </div>
-        <div class="location frame">
-            <h4>Stadt Standort</h4>
-            <img id="location" src="placeholder.png"/>
-        </div>
-        <div class="cityInfo">
-            <div class="cityname info">
-                <h4>Stadtname:</h4>
-                <h2 id="cityname">????</h2>
-            </div>
-            <div class="state info">
-                <h4>Verwaltungseinheit:</h4>
-                <p id="state">????</p>
-            </div>
-            <div class="plz info">
-                <h4>Postleitzahl(en):</h4>
-                <p id="plz">?????</p>
-            </div>
-            <div class="pop info">
-                <h4>Einwohnerzahl:</h4>
-                <p id="pop">?????</p>
-            </div>
-            <div class="alt info">
-                <h4>Höhe über Meeresspiegel:</h4>
-                <p id="alt">?????</p>
-            </div>
-        </div>
+<div id="infoButton" onclick="info('show')">Info</div>
+<div id="infoField" onclick="info('hide')">
+  <strong>Städtl.de</strong><p>Errate jeden Tag eine neue Stadt in Europa (ohne Russland) oder Deutschland.</p><p>Du hast 7 Versuche. Nach jedem Fehlversuch
+    erhältst Du zusätzliche Infomationen über die Stadt.
+    </p><p>Die Datengrundlage bildet Wikidata vom August 2023.
+      </p>
+    <table>
+      <tr><td>Europa:</td><td id="numEu"></td></tr>
+      <tr><td></td><td>&gt;250T Einw.</td></tr>
+      <tr><td>Deutschland:</td><td id="numDe"></td></tr>
+      <tr><td></td><td>&gt;30T Einw.</td></tr>
+    </table>
+</div>
+<div id="impressumButton" onclick="impressum('show')">Impressum</div>
+<div id="impressum" onclick="impressum('hide')">
+  <strong>Impressum</strong><p>Angaben gemäß § 5 TMG</p><p>Sören Kahl<br>   
+    Elsternstr. 23<br> 
+    01239 Dresden <br> 
+    </p><p><strong>Kontakt:</strong> <br>
+    Telefon: +491516475117<br>    
+    E-Mail: info(at)städtl.de<br>
+  <br>Diese Webseite speichert oder sammelt keinerlei Daten. Die verwendeten Bilder werden direkt von Wikimedia bezogen. Eine Übermittlung Ihrer IP Adresse an Wikimedia ist daher nicht zu unterbinden.
+  </p>
+</div>
+<div id="header">
+  <h1>Städtl:<div>
+    <div onclick="setISO('eu')" class="badge" id="eu">Europa</div><div onclick="setISO('de')" class="badge" id="de">Deutschland</div></div><span id="cityname" style="font-size:0.6em">Errate die Stadt!</span></h1>
+<div class="row">
+  <div class="column1">
+    <div class="cont">
+      <div class="alt info" id="alt">
+      </div>
+      <div class="pop info" id="pop">
+      </div>
+      <div class="plz info" id="plz">
+      </div>
+      <div class="state info" id="state">
+      </div>
     </div>
-    <div id="tries"></div>
-    <div id="inputArea">
-    <label for="fname">Vorschlag:</label>
+    <div class="cont" id="tries">
+    </div>
+  </div>
+  <div class="column2">
+    <div class="cont"><img id="wappen" src="wappen.svg"/></div>
+    <div class="cont"><img id="location" src="place.svg"/></div>
+  </div>
+</div>
+</div>
+<div id="inputArea">
+    <label for="fname" id="label"></label>
     <input onkeyup="proposal()" type="text" id="input" name="fname"/>
     <button id="ok" onclick="nextTry()">OK</button>
     <div id="proposal"></div>
-    </div>
-    <div id="impressum">Impressum: inhaltlich verantwortlich ist Sören Kahl / info(at)städtl.de<br>Diese Webseite speichert oder sammelt keinerlei Daten.<br>Die verwendeten Bilder werden direkt von Wikimedia bezogen.</div>
-</body>
+</div>
 
+</body>
 </html>
+

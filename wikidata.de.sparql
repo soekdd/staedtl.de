@@ -1,0 +1,22 @@
+SELECT ?country ?countryLabel ?cityLabel ?location (GROUP_CONCAT(DISTINCT ?stateLabel; SEPARATOR=", ") AS ?stateLabels) (SAMPLE(?locationMapURL) as ?locationMap) (SAMPLE(?imageURL) as ?image) (SAMPLE(?flagURL) as ?flag) (SAMPLE(?population) as ?inhabitants) (SAMPLE(?altitude) as ?height) (MIN(?plz) as ?plzMin) (MAX(?plz) as ?plzMax) WHERE {  
+  ?city (wdt:P31/(wdt:P279*)) ?town_or_city.
+  #?city wdt:P30 wd:Q46.
+  ?city wdt:P17 wd:Q183.
+        #Q142. # wd:Q183).  
+  ?city wdt:P1082 ?population.
+  ?city wdt:P625 ?location.
+  ?city wdt:P2044 ?altitude.
+  ?city wdt:P17 ?country.
+  ?city wdt:P281 ?plz.
+  ?city wdt:P94 ?flagURL.
+  ?city wdt:P18 ?imageURL.
+  OPTIONAL {?city wdt:P242 ?locationMapURL}.
+  OPTIONAL {?city wdt:P131 ?state}.
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],de".
+                                           ?state rdfs:label ?stateLabel.
+                                           ?city rdfs:label ?cityLabel.
+                                           ?country rdfs:label ?countryLabel.}
+  VALUES ?town_or_city { wd:Q515}  #wd:Q3957
+  FILTER (?population>30000)
+}
+GROUP BY ?country ?countryLabel ?cityLabel ?location
