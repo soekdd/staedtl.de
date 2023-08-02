@@ -44,7 +44,7 @@ for (let iso of ['de', 'eu']) {
   request({ method: 'GET', url, headers }, (error, response, body) => {
     let data = [];
     let cityNames = new Set();
-    fs.writeFileSync('body.'+iso+'.js', body);
+    // fs.writeFileSync('body.'+iso+'.js', body);
     for (let city of JSON.parse(body).results.bindings) {
       if (!cityNames.has(city.cityLabel?.value)) {
         let c = {
