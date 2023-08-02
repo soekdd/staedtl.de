@@ -57,7 +57,7 @@ var setInfoLevel = (level) => {
         document.getElementById('alt').innerHTML = '<h4>Höhe über N. N.</h4><p>' + currentCity.a + ' m</p>';
     }
     if(levels.includes('pop')) {
-        document.getElementById('pop').innerHTML = '<h4>Einwohnerzahl:</h4><p>' + currentCity.i + '</p>';
+        document.getElementById('pop').innerHTML = '<h4>Einwohnerzahl:</h4><p>' + parseInt(currentCity.i).toLocaleString("de-DE") + '</p>';
     }
     if (levels.includes('plz')) {
         if (Array.isArray(currentCity.z))
