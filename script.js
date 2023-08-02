@@ -48,6 +48,7 @@ var setInfoLevel = (level) => {
     if (level > 1) {
         document.getElementById('eu').style = "display:none";
         document.getElementById('de').style = "display:none";
+        document.getElementById('privacy').style = "display:none";
     }
     try {
         document.getElementById('label').innerHTML = level + '/' + maxLevel + ':';
@@ -98,6 +99,8 @@ var getIndex = (label)=>{
 }
 
 var nextTry = () => {
+    document.getElementById('infoField').style="display:none"
+    document.getElementById('impressum').style = "display:none"
     let input = document.getElementById('input').value.toUpperCase();
     if (currentCity.n.toUpperCase() == input) {
         document.getElementById('inputArea').innerHTML = '<h2 class="won">GEWONNEN!</h2><p>' + spruch[level] +'</p>';
@@ -116,6 +119,7 @@ var nextTry = () => {
     }
     document.getElementById('proposal').innerHTML = '';
     document.getElementById('input').value = '';
+    document.getElementById('ok').disabled = true;
 }
 
 var checkOK = () => {
@@ -176,23 +180,33 @@ var proposal = () => {
 
 var impressum = (action) => {
     if (action == 'show') {
+        document.getElementById('privacy').style = "display:none";
+        document.getElementById('infoField').style="display:none"
         document.getElementById('impressum').style="display:block"
     }
     else {
-        document.getElementById('impressum').style="display:none"
+        document.getElementById('impressum').style = "display:none"
+        if (level == 1) {
+            document.getElementById('privacy').style = "";
+        }        
     }
 
 }
 
 var info = (action) => {
     if (action == 'show') {
+        document.getElementById('privacy').style = "display:none";
+        document.getElementById('impressum').style="display:none"
         document.getElementById('infoField').style = "display:block"
         document.getElementById('numDe').innerHTML = datade.length + ' Städte';
         document.getElementById('numEu').innerHTML = dataeu.length + ' Städte';
     
     }
     else {
-        document.getElementById('infoField').style="display:none"
+        document.getElementById('infoField').style = "display:none"
+        if (level == 1) {
+            document.getElementById('privacy').style = "";
+        }    
     }
 
 }

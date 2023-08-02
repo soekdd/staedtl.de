@@ -1,10 +1,9 @@
-body, html{
+body{
     max-width:800px;
     margin:0;
     padding:0;
     position: fixed;
     width: 100%;
-    
 }
 * {
     font-family: "Gill Sans", sans-serif;
@@ -28,6 +27,16 @@ body, html{
 table{
   border:none;
   text-align: left;
+}
+#privacy{    
+  text-align: center;
+  font-size: 2vh;
+  z-index:6;
+  padding: 0;
+  position: absolute;
+  top:50vh;
+  padding: 3em;
+  background:#eeee;
 }
 
 #impressum, #infoField{    
