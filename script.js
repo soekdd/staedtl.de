@@ -19,7 +19,7 @@ var setISO = (iso) => {
             data = datade;
             document.getElementById('eu').style = "opacity:0.3";
             document.getElementById('de').style = "";
-            } else {
+        } else {
             data = dataeu;
             document.getElementById('eu').style = "";
             document.getElementById('de').style = "opacity:0.3";
@@ -29,7 +29,7 @@ var setISO = (iso) => {
         currentCity = data[random(seed, data.length)];    
         console.log(currentCity);
         setInfoLevel( 1*level );    
-        } else {
+    } else {
         document.getElementById('eu').style = "display:none";
         document.getElementById('de').style = "display:none";    
     }
@@ -198,9 +198,8 @@ var impressum = (action) => {
     }
     else {
         document.getElementById('impressum').style = "display:none"
-        if (level == 1) {
+        if (level == 1)
             document.getElementById('privacy').style = "";
-        }        
     }
 
 }
@@ -217,9 +216,8 @@ var info = (action) => {
     }
     else {
         document.getElementById('infoField').style = "display:none"
-        if (level == 1) {
+        if (level == 1)
             document.getElementById('privacy').style = "";
-        }    
     }
 
 }
