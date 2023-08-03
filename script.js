@@ -184,7 +184,7 @@ var proposal = () => {
         if (city.n.toUpperCase().slice(0,input.length) == input) {
             counter++;
             if (counter < 6) {
-              s += '<a href="#" onclick="setProp(\''+city.n+'\')" >' + city.n + '</a></br>';
+              s += '<div class="pLine" onclick="setProp(\''+city.n+'\')" >' + city.n + '</div>';
             }
         }
     document.getElementById('proposal').innerHTML = s;

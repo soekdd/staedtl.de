@@ -67,7 +67,7 @@ h1 {
     1px 1px 0 #aaa,
     1px -1px 0 #aaa,
     -1px -1px 0 #aaa;
-  margin: 0.5em 0 0.1em 0;
+  margin: 0;
   line-height: 0.8em;
 }
 
@@ -84,7 +84,7 @@ h1 {
   color: white;
   height: 70vh;
   font-size: 30px;
-  padding: 2vh 6vw;
+  padding: 2vh 6%;
   z-index: 0;
   position: sticky;
   top: 0;
@@ -129,6 +129,11 @@ h1 {
   margin: 1vh 1vw;
   object-fit: cover;
   padding-top: 0.2em;
+}
+
+h1 img{
+  width: 90%;
+  margin-bottom: -0.3em;
 }
 
 .column1 .cont {
@@ -196,6 +201,14 @@ h1 {
 }
 
 #proposal {
-  font-size: 1.3em;
+  font-size: 1.3em;  
   margin: 0.2em;
+}
+
+.pLine {
+  font-size: 3vh;
+  margin: 0.1em;
+  width: 100%;
+  background: #eee9;
+  border: 1px solid #eee9;
 }

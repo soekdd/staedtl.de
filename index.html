@@ -19,7 +19,7 @@
 <div id="infoButton" onclick="info('show')">Info</div>
 <div id="infoField" onclick="info('hide')">
   <strong>Städtl.de</strong><p>Errate jeden Tag eine neue Stadt in Europa (ohne Russland) oder Deutschland.</p><p>Du hast 7 Versuche. Nach jedem Fehlversuch
-    erhältst Du zusätzliche Infomationen über die Stadt.
+    erhältst Du zusätzliche Infomationen oder Bilder über die Stadt.
     </p><p>Die Datengrundlage bildet Wikidata vom August 2023.
       </p>
     <table>
@@ -28,6 +28,7 @@
       <tr><td>Deutschland:</td><td id="numDe"></td></tr>
       <tr><td></td><td id="minDe"></td></tr>
     </table>
+    <p style="text-align: right;margin-bottom: 0;font-size: 0.7em;">V1.0</p>
 </div>
 <div id="impressumButton" onclick="impressum('show')">Impressum</div>
 <div id="impressum" onclick="impressum('hide')">
@@ -41,7 +42,7 @@
   </p>
 </div>
 <div id="header">
-  <h1>Städtl:<div>
+  <h1><img src="logo1.png"><div>
     <div onclick="setISO('eu')" class="badge" id="eu">Europa</div><div onclick="setISO('de')" class="badge" id="de">Deutschland</div></div><span id="cityname" style="font-size:0.6em">Errate die Stadt!</span></h1>
 <div class="row">
   <div class="column1">
