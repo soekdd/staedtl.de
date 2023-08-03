@@ -1,6 +1,7 @@
 import { WBK } from 'wikibase-sdk'
 import fs from 'fs';
 import request from 'request';
+import blacklist from './blacklist.mjs';
 
 var arrayToValues = (arr) => {
   let res = [];
@@ -36,6 +37,7 @@ const wbk = WBK({
   instance: 'https://wikidata.org/',
   sparqlEndpoint: 'https://query.wikidata.org/sparql'
 })
+const wikimedia = 'http://commons.wikimedia.org/wiki/Special:FilePath/';
 for (let iso of ['de', 'eu']) {
   const sparql = fs.readFileSync('wikidata.'+iso+'.sparql');
   const url = wbk.sparqlQuery(sparql)
@@ -43,8 +45,8 @@ for (let iso of ['de', 'eu']) {
   // request the generated URL with your favorite HTTP request library
   request({ method: 'GET', url, headers }, (error, response, body) => {
     let data = [];
-    let cityNames = new Set();
-    // fs.writeFileSync('body.'+iso+'.js', body);
+    let cityNames = new Set(blacklist);
+    fs.writeFileSync('body.'+iso+'.js', body);
     for (let city of JSON.parse(body).results.bindings) {
       if (!cityNames.has(city.cityLabel?.value)) {
         let c = {
@@ -52,12 +54,13 @@ for (let iso of ['de', 'eu']) {
           z: getPLZ(city),
           s: city.stateLabels?.value || city.countryLabel?.value,
           c: city.countryLabel?.value,
-          a: city.height.value,
-          f: city.flag?.value || 'wappen.svg',
-          l: city.locationMap?.value || 'place.svg',
-          p: city.image?.value || 'placeholder.jpg',
+          a: city.height?.value ||0,
+          f: city.flag?.value.replace(wikimedia,'@') || 'wappen.svg',
+          l: city.locationMap?.value.replace(wikimedia,'@') || 'place.svg',
+          p: city.image?.value.replace(wikimedia,'@') || 'placeholder.jpg',
           i: city.inhabitants.value,
-          g: getCoordinates(city)
+          g: getCoordinates(city),
+          w: city.article?.value
         }
         data.push(c);
         cityNames.add(c.c);
