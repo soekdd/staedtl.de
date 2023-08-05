@@ -23,5 +23,6 @@ SELECT ?article ?countryLabel ?cityLabel ?location (GROUP_CONCAT(DISTINCT ?state
                                            ?country rdfs:label ?countryLabel.}
   VALUES ?town_or_city { wd:Q515 wd:Q3957 wd:Q5119}  
   FILTER (?population>40000)
+  FILTER (?country != wd:Q16957) #ddr
 }
 GROUP BY ?article ?countryLabel ?cityLabel ?location

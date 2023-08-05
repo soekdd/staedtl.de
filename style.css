@@ -53,8 +53,8 @@ table {
   position: absolute;
   font-size: 2vh;
   top: 2vh;
-  width: 80vw;
-  left: 50vw;
+  width: 80%;
+  left: 50%;
   z-index: 6;
   padding: 3em;
   background: #eeee;

@@ -1,4 +1,4 @@
-SELECT ?article ?countryLabel ?cityLabel ?location (GROUP_CONCAT(DISTINCT ?stateLabel; SEPARATOR=", ") AS ?stateLabels) (SAMPLE(?locationMapURL) as ?locationMap) (SAMPLE(?imageURL) as ?image) (SAMPLE(?flagURL) as ?flag) (SAMPLE(?population) as ?inhabitants) (SAMPLE(?altitude) as ?height) (MIN(?plz) as ?plzMin) (MAX(?plz) as ?plzMax) WHERE {  
+SELECT ?country ?article ?countryLabel ?cityLabel ?location (GROUP_CONCAT(DISTINCT ?stateLabel; SEPARATOR=", ") AS ?stateLabels) (SAMPLE(?locationMapURL) as ?locationMap) (SAMPLE(?imageURL) as ?image) (SAMPLE(?flagURL) as ?flag) (SAMPLE(?population) as ?inhabitants) (SAMPLE(?altitude) as ?height) (MIN(?plz) as ?plzMin) (MAX(?plz) as ?plzMax) WHERE {  
   ?city (wdt:P31/(wdt:P279*)) wd:Q515.
   ?country wdt:P30 wd:Q46.
   #?city wdt:P17 wd:Q142.
@@ -27,5 +27,11 @@ SELECT ?article ?countryLabel ?cityLabel ?location (GROUP_CONCAT(DISTINCT ?state
   FILTER (?country != wd:Q12560)
   FILTER (?country != wd:Q175276)
   FILTER (?country != wd:Q199442)
+  FILTER (?country != wd:Q232) #kasaschstan
+  FILTER (?country != wd:Q16957) #ddr
+  FILTER (?country != wd:Q2415901) #d 45-49
+  FILTER (?country != wd:Q179876) # koenigreich england  
+  FILTER (?city != wd:Q16836589) #efeler
+  FILTER (?city != wd:Q2074197) #irgendwas in serbien
 }
-GROUP BY ?article ?countryLabel ?cityLabel ?location
+GROUP BY ?country ?article ?countryLabel ?cityLabel ?location

@@ -17,18 +17,23 @@ var getCoordinates = (city)=>{
   return geo;
 }
 
+var lz = (p)=>{
+  return "00000".concat(p).slice(-5)
+}
+
 var getPLZ = (city) => {
   if (city.plzMin == undefined) return 'unbekannt';
-  let plzs = [...city.plzMin.value.split('-'), ...city.plzMax.value.split('-')];
-  let plz = plzs[0];
+  let plzs = [...city.plzMin.value.split('–'), ...city.plzMax.value.split('–')];  
+  let plz = lz(plzs[0]);
   if (plzs.length > 0) {
     let p1 = Math.min(...arrayToValues(plzs));
     let p2 = Math.max(...arrayToValues(plzs));
-    if (p1 == p1)
-      plz = p1;
+    if (p1 == p2)
+      plz = lz(p1);
     else
-      plz = [p1, p2]
+      plz = [lz(p1), lz(p2)]
   }
+  //console.log(city.plzMin.value,city.plzMax.value,plzs,plz)
   return plz
 }
 
@@ -46,7 +51,7 @@ for (let iso of ['de', 'eu']) {
   request({ method: 'GET', url, headers }, (error, response, body) => {
     let data = [];
     let cityNames = new Set(blacklist);
-    fs.writeFileSync('body.'+iso+'.js', body);
+    // fs.writeFileSync('body.'+iso+'.js', body);
     for (let city of JSON.parse(body).results.bindings) {
       if (!cityNames.has(city.cityLabel?.value)) {
         let c = {
