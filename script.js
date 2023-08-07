@@ -1,6 +1,7 @@
 var data, game;
 var level = 1;
 var tries = [];
+dataeu = [...dataeu, ...dataes, ...databe,...dataru, ...datade.filter(e => e.i > 250000)];
 var maxLevel = 7;
 const wikimedia = 'http://commons.wikimedia.org/wiki/Special:FilePath/';
 var spruch = ['', 'Glück gehabt!', 'Du bist ein Genie!', 'Das war sehr gut!', 'Ziemlich gut!', 'Immer noch ganz gut!', 'Du brauchtest viel Hilfe!', 'Knappe Sache!'];
@@ -17,16 +18,18 @@ var setISO = (iso) => {
         game = iso;
         if (game == 'de') {
             data = datade;
+            dataRandom = data;
             document.getElementById('eu').style = "opacity:0.3";
             document.getElementById('de').style = "";
         } else {
             data = dataeu;
+            dataRandom = dataeu.filter(e => e.c != 'Deutschland');
             document.getElementById('eu').style = "";
             document.getElementById('de').style = "opacity:0.3";
         }
-        let today = new Date();
+        let today = new Date();        
         let seed = (today.getFullYear() * 100 + today.getMonth()) * 100 + today.getDay();
-        currentCity = data[random(seed, data.length)];    
+        currentCity = dataRandom[random(seed+1, dataRandom.length)];    
         console.log(currentCity);
         setInfoLevel( 1*level );    
     } else {
@@ -149,21 +152,15 @@ var updateTries = () => {
     for (let city of tries) {
         count++;
         let tGeo = city.g;
-        let long1 = cGeo[0];
-        let long2 = tGeo[0];
-        let lat1 = cGeo[1];
-        let lat2 = tGeo[1];
-        let dx = long1 - long2;
-        let dy = lat1 - lat2;
-        let deg = 180 * Math.atan2(dx, dy) / Math.PI;
-        let distance = 6370 * Math.acos(
-            (Math.sin(lat1 * Math.PI / 180) * Math.sin(lat2 * Math.PI / 180)) +
-            Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180)
-            * Math.cos(long2 * Math.PI / 180 - long1 * Math.PI / 180 )
-        );
-        s += '<p>' +count+'. ' + ('<a href="https://www.google.com/maps/search/?api=1&query='+city.g[1]+'%2C'+city.g[0]+'&zoom=2&hl=de" target="_blank">'+city.n+'</a>')
-            + '<img src="arrow.svg" style="transform: rotate('+Math.round(deg)+'deg);" class="arrow"/>'
-            +  Math.round(distance) + ' km</p>';
+        let geo = window.geodesic.Geodesic.WGS84.Inverse(tGeo[1], tGeo[0], cGeo[1], cGeo[0]);
+        let distance = Math.round(geo.s12 / 1000);
+        let deg = Math.round(geo.azi1);
+        s += '<p>' + count + '. ';
+        //https://maps.google.com/?q=38.6531004,-90.243462&ll=38.6531004,-90.243462&z=3
+        s += '<a href="https://maps.google.com/?q=' + tGeo[1] + ',' + tGeo[0] + '&ll=' + tGeo[1] + ',' + tGeo[0] + '&z='+(game=='de'?9:7) +'" target="_blank">' + city.n + '</a>';
+        //s += '<a href="https://www.google.com/maps/search/?api=1&query=' + tGeo[1] + '%2C' + tGeo[0] + '&zoom=2&hl=de" target="_blank">' + city.n + '</a>';
+        s += '<img src="arrow.svg" alt="course:' + deg + '°" style="transform: rotate(' + deg + 'deg);" class="arrow"/>';
+        s += Math.round(distance) + ' km</p>';
     }
     document.getElementById('tries').style = '';    
     document.getElementById('tries').innerHTML = s;

@@ -21,12 +21,15 @@ SELECT ?country ?article ?countryLabel ?cityLabel ?location (GROUP_CONCAT(DISTIN
                                            ?state rdfs:label ?stateLabel.
                                            ?city rdfs:label ?cityLabel.
                                            ?country rdfs:label ?countryLabel.}  
-  FILTER (?population>250000)
-  FILTER (?country != wd:Q159)
+  FILTER (?population>250000)  
   FILTER (?country != wd:Q1747689)
   FILTER (?country != wd:Q12560)
   FILTER (?country != wd:Q175276)
   FILTER (?country != wd:Q199442)
+  FILTER (?country != wd:Q159) #russia
+  FILTER (?country != wd:Q183) #belgium  
+  FILTER (?country != wd:Q31) #belgium  
+  FILTER (?country != wd:Q29) #spain
   FILTER (?country != wd:Q232) #kasaschstan
   FILTER (?country != wd:Q16957) #ddr
   FILTER (?country != wd:Q2415901) #d 45-49

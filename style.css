@@ -61,6 +61,12 @@ table {
   transform: translate(-50%, 0%);
 }
 
+.infoHint{
+  text-align: right;
+  margin-bottom: 0;
+  font-size: 0.7em;
+}
+
 h1 {
   color: black;
   text-shadow: -1px 1px 0 #aaa,

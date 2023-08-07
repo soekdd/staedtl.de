@@ -1,0 +1,28 @@
+SELECT DISTINCT ?city ?article ?countryLabel ?cityLabel ?location (GROUP_CONCAT(DISTINCT ?stateLabel; SEPARATOR=", ") AS ?stateLabels) (SAMPLE(?locationMapURL) as ?locationMap) (SAMPLE(?imageURL) as ?image) (SAMPLE(?flagURL) as ?flag) (SAMPLE(?population) as ?inhabitants) (SAMPLE(?altitude) as ?height) WHERE {  
+  # ?city (wdt:P31/(wdt:P279*)) ?town_or_city.  
+  ?city wdt:P17 wd:Q29. 
+        #Q142. # wd:Q183).  
+  ?city wdt:P1376 ?headof.
+  ?city wdt:P1082 ?population.
+  ?city wdt:P625 ?location.
+  ?city wdt:P2044 ?altitude.
+  ?city wdt:P17 ?country.
+  ?city wdt:P94 ?flagURL.
+  ?city wdt:P18 ?imageURL.  
+    OPTIONAL {
+      ?article schema:about ?city .
+      ?article schema:inLanguage "de" .
+      ?article schema:isPartOf <https://de.wikipedia.org/> .
+    }  
+  OPTIONAL {?city wdt:P242 ?locationMapURL}.
+  OPTIONAL {?city wdt:P131 ?state}.
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],de".
+                                           ?state rdfs:label ?stateLabel.
+                                           ?city rdfs:label ?cityLabel.
+                                           ?country rdfs:label ?countryLabel.}
+  # VALUES ?town_or_city { wd:Q3257686 }   #wd:Q15284
+  FILTER (?population>250000)
+  FILTER (?country != wd:Q175276) #Leon
+  FILTER (?country != wd:Q199442) #Aragón
+}
+GROUP BY ?city ?article ?countryLabel ?cityLabel ?location

@@ -18,6 +18,7 @@
   "homepage": "https://github.com/soekdd/staedtl.de#readme",
   "dependencies": {
     "fs": "^0.0.1-security",
+    "geographiclib-geodesic": "^2.0.0",
     "request": "^2.88.2",
     "wikibase-sdk": "^9.2.2"
   }

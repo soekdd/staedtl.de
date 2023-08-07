@@ -43,7 +43,7 @@ const wbk = WBK({
   sparqlEndpoint: 'https://query.wikidata.org/sparql'
 })
 const wikimedia = 'http://commons.wikimedia.org/wiki/Special:FilePath/';
-for (let iso of ['de', 'eu']) {
+for (let iso of ['de', 'eu', 'es', 'be', 'ru']) {
   const sparql = fs.readFileSync('wikidata.'+iso+'.sparql');
   const url = wbk.sparqlQuery(sparql)
   const headers = { 'User-Agent': 'nodejs' }; // see https://meta.wikimedia.org/wiki/User-Agent_policy
@@ -55,7 +55,7 @@ for (let iso of ['de', 'eu']) {
     for (let city of JSON.parse(body).results.bindings) {
       if (!cityNames.has(city.cityLabel?.value)) {
         let c = {
-          n: city.cityLabel.value,
+          n: city.cityName?.value || city.cityLabel.value,
           z: getPLZ(city),
           s: city.stateLabels?.value || city.countryLabel?.value,
           c: city.countryLabel?.value,
