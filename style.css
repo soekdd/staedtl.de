@@ -74,11 +74,12 @@ h1 {
     1px -1px 0 #aaa,
     -1px -1px 0 #aaa;
   margin: 0;
+  text-align: center;
   line-height: 0.8em;
 }
 
 .row {
-  margin: 0vw;
+  margin: 0;
 }
 
 #header {
@@ -132,7 +133,7 @@ h1 {
   overflow: hidden;
   width: 100%;
   height: 20vh;
-  margin: 1vh 1vw;
+  margin: 1vh 1%;
   object-fit: cover;
   padding-top: 0.2em;
 }
@@ -164,27 +165,55 @@ h1 img{
   background-image: url('de.svg');
 }
 
+#nowEU, #nowDE{
+  font-size: 30px;
+  z-index:20;
+  position: absolute;
+  left:10%;
+  width:80%;
+  top:85vh;
+}
 .badge {
   font-size: 0.3em;
   border: 1px solid #aaa;
   display: inline-block;
   border-radius: 50%;
-  width: 40%;
-  margin: 0 5%;
+  width: 38%;
+  /* margin: 0 5%; */
   background-size: contain;
   background-position: center;
 }
 
+h2 .badge {
+  font-size: 18px;
+  line-height: 45px;
+  color: white;
+  text-align: center;
+}
+
+.playNow{
+  font-size: 0.3em;
+  text-shadow: none;  
+}
+
 #inputArea {
-  padding: 2vw;
+  padding: 2%;
   width: 100%;
   height: 5em;
   text-align: center;
 }
 
 #inputArea input {
-  font-size: 2.5vh;
+  font-size: 2.5vh;  
   width: calc(100% - 7em);
+}
+#firework{
+  z-index:10;
+  position:absolute;  
+  width: 100%;
+  height:40vh;
+  top:60vh;
+  left:0;
 }
 
 #inputArea label,

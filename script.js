@@ -1,4 +1,4 @@
-var data, game;
+var data, game, fuse,fireworks;
 var level = 1;
 var tries = [];
 dataeu = [...dataeu, ...dataes, ...databe,...dataru, ...datade.filter(e => e.i > 250000)];
@@ -6,7 +6,7 @@ var maxLevel = 7;
 const wikimedia = 'http://commons.wikimedia.org/wiki/Special:FilePath/';
 var spruch = ['', 'Glück gehabt!', 'Du bist ein Genie!', 'Das war sehr gut!', 'Ziemlich gut!', 'Immer noch ganz gut!', 'Du brauchtest viel Hilfe!', 'Knappe Sache!'];
 var main = () => {    
-    setISO('de');
+    setISO(window.location.hash.slice(1)||'de');        
 }
 
 var handleURL = (url) => {
@@ -14,6 +14,7 @@ var handleURL = (url) => {
 }
 
 var setISO = (iso) => {    
+    window.location.hash = '#' + iso;
     if (level == 1) {
         game = iso;
         if (game == 'de') {
@@ -29,13 +30,14 @@ var setISO = (iso) => {
         }
         let today = new Date();        
         let seed = (today.getFullYear() * 100 + today.getMonth()) * 100 + today.getDay();
-        currentCity = dataRandom[random(seed+1, dataRandom.length)];    
+        currentCity = dataRandom[random(seed+3, dataRandom.length)];    
         console.log(currentCity);
         setInfoLevel( 1*level );    
     } else {
         document.getElementById('eu').style = "display:none";
         document.getElementById('de').style = "display:none";    
     }
+    fuse = new Fuse(data, { keys: ['n'],location:0,distance:2 });
     document.getElementById('proposal').innerHTML = '';
     document.getElementById('input').value = '';
     document.getElementById('ok').disabled = true;
@@ -54,8 +56,11 @@ var arrayToValues = (arr) => {
         res.push(parseInt(a))
     return res;
 }
-var setInfoLevel = (level) => { 
+var setInfoLevel = (level) => {    
     if (level > 1) {
+        try{
+            document.getElementById('input').setAttribute('placeholder', (level < maxLevel ? level + '.' : 'letzter') + ' Versuch');
+        } catch(e) {}
         document.getElementById('eu').style = "display:none";
         document.getElementById('de').style = "display:none";
         document.getElementById('privacy').style = "display:none";
@@ -110,15 +115,25 @@ var getIndex = (label)=>{
             return index
     return -1;
 }
+var nextGame = () => {
+    if (game=='de')
+        document.getElementById('nowEU').style = "";
+    else
+        document.getElementById('nowDE').style = "";
+}
 
 var nextTry = () => {
     document.getElementById('infoField').style="display:none"
     document.getElementById('impressum').style = "display:none"
-    document.getElementById('location').style = '';
+    document.getElementById('outerLocation').style = '';
     let input = document.getElementById('input').value.toUpperCase();
     if (currentCity.n.toUpperCase() == input) {
         document.getElementById('inputArea').innerHTML = '<h2 class="won">GEWONNEN!</h2><p>' + spruch[level] +'</p>';
         setInfoLevel(99);
+        fireworks = new Fireworks.default(document.getElementById('firework'), {explosion:(maxLevel-level)+1,particles:10*((maxLevel-level)+1)})
+        document.getElementById('firework').style=""
+        fireworks.start();
+        nextGame();
         return
     }
     let index = getIndex(input);
@@ -130,10 +145,16 @@ var nextTry = () => {
     updateTries();
     if (level > maxLevel) {
         document.getElementById('inputArea').innerHTML = '<h2 class="lost">VERLOREN!</h2>';
+        nextGame();
     }
     document.getElementById('proposal').innerHTML = '';
     document.getElementById('input').value = '';
     document.getElementById('ok').disabled = true;
+}
+
+var newGame = (iso) => {
+    window.location.hash = '#' + iso;
+    window.location.reload();
 }
 
 var checkOK = () => {
@@ -177,13 +198,9 @@ var proposal = () => {
     let input = document.getElementById('input').value.toUpperCase();
     let counter = 0;
     let s = '';
-    for (let city of data)
-        if (city.n.toUpperCase().slice(0,input.length) == input) {
-            counter++;
-            if (counter < 6) {
-              s += '<div class="pLine" onclick="setProp(\''+city.n+'\')" >' + city.n + '</div>';
-            }
-        }
+    for (let f of fuse.search(input).slice(0,5)) {
+        s += '<div class="pLine" onclick="setProp(\'' + f.item.n + '\')" >' + f.item.n + '</div>';
+    }
     document.getElementById('proposal').innerHTML = s;
 }
 

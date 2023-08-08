@@ -29,6 +29,8 @@
     <meta name="author" content="Soeren Kahl" />
     <link rel="icon" type="image/x-icon" href="favicon.png" />
     <script src="geographiclib-geodesic.min.js"></script>
+    <script src="fuse.basic.min.js"></script>
+    <script src="index.umd.js"></script>
     <script src="data.de.js"></script>
     <script src="data.es.js"></script>
     <script src="data.be.js"></script>
@@ -75,9 +77,11 @@
       <p class="infoHint">
         powered by <a href="https://de.wikipedia.org/">Wikipedia</a>,
         <a href="https://www.wikidata.org/">Wikidata</a>,
-        <a href="https://commons.wikimedia.org/">Wikimedia</a> &amp;
+        <a href="https://commons.wikimedia.org/">Wikimedia</a>,
+        <a href="https://fireworks.js.org/">fireworks.js</a>,        
+        <a href="https://www.fusejs.io/">fuse.js</a> &amp;
         <a href="https://geographiclib.sourceforge.io/">GeographicLib</a>
-        <br />V1.3 07.08.23
+        <br />V1.4 08.08.23
       </p>
     </div>
     <div id="impressumButton" onclick="impressum('show')">Impressum</div>
@@ -119,10 +123,9 @@
           <div class="cont">
             <img alt="wappen" id="wappen" src="wappen.svg" />
           </div>
-          <div class="cont">
+          <div class="cont" style="display: none" id="outerLocation">
             <img
-              alt="place"
-              style="display: none"
+              alt="place"              
               id="location"
               src="place.svg"
             />
@@ -136,9 +139,23 @@
     </div>
     <div id="inputArea">
       <label for="fname" id="label"></label>
-      <input onkeyup="proposal()" type="text" id="input" name="fname" />
+      <input placeholder="Trage hier die Stadt ein" onkeyup="proposal()" type="text" id="input" name="fname" />
       <button id="ok" disabled onclick="nextTry()">OK</button>
       <div id="proposal"></div>
     </div>
+    <div id="firework" style="display:none"></div>
+    <div id="nowEU" style="display:none">
+      <h1>
+        <span class="playNow">Spiele jetzt:</span>
+        <div onclick="newGame('eu')" class="badge" id="eu" style="margin-top: -0.2em;">Europa</div>  
+      </h1>
+    </div>
+    <div id="nowDE" style="display:none">
+      <h1>
+        <span class="playNow">Spiele jetzt:</span>
+        <div onclick="newGame('de')" class="badge" id="de" style="margin-top: -0.2em;">Deutschland</div>        
+      </h1>
+    </div>
+  
   </body>
 </html>
