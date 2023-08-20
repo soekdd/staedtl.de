@@ -1,4 +1,4 @@
-SELECT ?country ?article ?countryLabel ?cityLabel ?location (GROUP_CONCAT(DISTINCT ?stateLabel; SEPARATOR=", ") AS ?stateLabels) (SAMPLE(?locationMapURL) as ?locationMap) (SAMPLE(?imageURL) as ?image) (SAMPLE(?flagURL) as ?flag) (SAMPLE(?population) as ?inhabitants) (SAMPLE(?altitude) as ?height) (MIN(?plz) as ?plzMin) (MAX(?plz) as ?plzMax) WHERE {  
+SELECT DISTINCT ?country ?article ?countryLabel ?cityLabel ?location (GROUP_CONCAT(DISTINCT ?stateLabel; SEPARATOR=", ") AS ?stateLabels) (SAMPLE(?locationMapURL) as ?locationMap) (SAMPLE(?imageURL) as ?image) (SAMPLE(?flagURL) as ?flag) (SAMPLE(?population) as ?inhabitants) (SAMPLE(?altitude) as ?height) (MIN(?plz) as ?plzMin) (MAX(?plz) as ?plzMax) WHERE {  
   ?city (wdt:P31/(wdt:P279*)) wd:Q515.
   ?country wdt:P30 wd:Q46.
   #?city wdt:P17 wd:Q142.
@@ -21,7 +21,7 @@ SELECT ?country ?article ?countryLabel ?cityLabel ?location (GROUP_CONCAT(DISTIN
                                            ?state rdfs:label ?stateLabel.
                                            ?city rdfs:label ?cityLabel.
                                            ?country rdfs:label ?countryLabel.}  
-  FILTER (?population>250000)  
+  FILTER (?population>300000)  
   FILTER (?country != wd:Q1747689)
   FILTER (?country != wd:Q12560)
   FILTER (?country != wd:Q175276)

@@ -17,11 +17,13 @@
   },
   "homepage": "https://github.com/soekdd/staedtl.de#readme",
   "dependencies": {
+    "axios": "^1.4.0",
     "fireworks-js": "^2.10.7",
     "fs": "^0.0.1-security",
     "fuse.js": "^6.6.2",
     "geographiclib-geodesic": "^2.0.0",
     "request": "^2.88.2",
+    "seedrandom": "^3.0.5",
     "wikibase-sdk": "^9.2.2"
   }
 }

@@ -21,7 +21,7 @@ SELECT DISTINCT ?city ?article ?countryLabel ?cityLabel ?location (GROUP_CONCAT(
                                            ?city rdfs:label ?cityLabel.
                                            ?country rdfs:label ?countryLabel.}
   # VALUES ?town_or_city { wd:Q3257686 }   #wd:Q15284
-  FILTER (?population>250000)
+  FILTER (?population>300000)
   FILTER (?country != wd:Q175276) #Leon
   FILTER (?country != wd:Q199442) #Aragón
 }

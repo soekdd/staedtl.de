@@ -20,6 +20,6 @@ SELECT DISTINCT ?article ?countryLabel ?cityLabel ?location (SAMPLE(?locationMap
                                            ?city rdfs:label ?cityLabel.
                                            ?country rdfs:label ?countryLabel.}
   VALUES ?town_or_city { wd:Q1549591 wd:Q5119 }   #wd:Q15284
-  FILTER (?population>250000)  
+  FILTER (?population>300000)  
 }
 GROUP BY ?article ?countryLabel ?cityLabel ?location

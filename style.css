@@ -11,6 +11,15 @@ body {
   box-sizing: border-box;
 }
 
+#copyright{
+  display:none;
+  position: absolute;
+  top: calc(70vh - 2em);
+  z-index: 5;
+  padding: 0.4em;
+  white-space: nowrap;
+  overflow: hidden;
+}
 #impressumButton,
 #infoButton {
   position: absolute;
